@@ -1,6 +1,6 @@
 #!/bin/sh
 cd /bots
-printf "\n\nSetting up docker!\n\n"
+printf "\nSetting up docker!\n"
 if [ -x "$(command -v docker)" ]; then
     echo -e "Docker already installed. Skipping..."
 else
@@ -12,20 +12,20 @@ else
     sudo apt-get install docker-ce -y 
     sudo usermod -aG docker ${USER}
     su - ${USER}
-    printf "\n\nDocker has been set up!\n\n"
+    printf "\nDocker has been set up!\n"
 fi
 sudo curl -L "https://github.com/docker/compose/releases/download/1.27.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
 sudo git clone https://github.com/thinkfiveable/cram-support-bot.git csb
 sudo mkdir mm
-printf "\n\nMoving ENV files!\n\n"
+printf "\nMoving ENV files!\n"
 sudo mv /bots/csb.env /bots/csb/.env
 sudo mv /bots/mm.env /bots/mm/.env
-printf "\n\nStarting up bots...\n\n"
-cd csb
+printf "\nStarting up bots...\n"
+cd /bots/csb
 docker-compose up -d --build
-printf "\n\nStarted up CSB\n\n"
-cd ../mm
+printf "\nStarted up CSB\n"
+cd /bots/mm
 docker pull kyb3rr/modmail
 docker run -d --restart=unless-stopped --env-file .env kyb3rr/modmail
-printf "\n\nStarted up MM"
+printf "\nStarted up MM\n"
